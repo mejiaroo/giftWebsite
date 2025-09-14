@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Wendi!</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="hearts"></div>
+    <details>
+        <summary>Play Audio</summary>
+        <audio controls>
+            <source src="audio/lowQual.m4a" type="audio/mp4">
+            <source src="audio/lowQal.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </details>
+    <div class="stars"></div>
     <header>
-    <h1>For My Love</h1>
-    <p>💖 A little gift just for you 💖</p>
+        <h1>For Wendi</h1>
+        <p>Something small to repay you</p>
     </header>
 
-    <main>
+    <main id="main-content">
         <section id="gallery">
             <h2>Our Memories</h2>
             <div class="gallery-grid">
-            <img src="photo1.jpg" alt="Us at the park">
-            <img src="photo2.jpg" alt="Dinner date">
-            <img src="photo3.jpg" alt="Trip together">
+                <img src="photo1.jpg" alt="Us at the park">
+                <img src="photo2.jpg" alt="Dinner date">
+                <img src="photo3.jpg" alt="Trip together">
             </div>
         </section>
 
@@ -35,24 +46,25 @@
 
         <section id="letter">
             <h2>A Note for You</h2>
-            <p>My love, every day with you feels like a beautiful adventure. You bring light to my world, laughter to my heart, and peace to my soul. I cherish every moment we share and look forward to the many more memories we will create together. You are my everything, my favorite hello, and my hardest goodbye. ❤️</p>
+            <p>Placeholder</p>
         </section>
     </main>
 
     <footer>
         <p>I love you</p>
     </footer>
-    <script src="hearts.js"></script>
+    <script src="stars.js"></script>
     <div id="password-overlay">
         <div id="password-box">
-        <h2>What nickname did you use for me?</h2>
-        <input type="password" id="password-input" placeholder="Type here">
-        <button id="submit-password">Enter</button>
-        <p id="error-msg" style="color: rgb(241, 191, 191); display:none;">Nope! Hint: b***</p>
-        <div class="dots"></div>
+            <h2>What nickname did you use for me?</h2>
+            <input type="password" id="password-input" placeholder="Type here">
+            <button id="submit-password">Enter</button>
+            <p id="error-msg" style="color: #B23A48; display:none;">Nope! Hint: b***</p>
         </div>
+        <div class="dots"></div>
     </div>
     <script src="password.js"></script>
-    <script src="dots.js"></script>
+    <!-- <script src="dots.js"></script> -->
 </body>
+
 </html>
