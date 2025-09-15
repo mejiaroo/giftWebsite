@@ -137,7 +137,7 @@ footer {
 
 #password-box input {
   /* Make input take up available width */
-  width: 100%;
+  width: 90%;
   max-width: 250px;
   /* Optional: prevent it from getting too wide */
   padding: 10px;
@@ -164,36 +164,34 @@ footer {
 }
 
 #oval-banner {
+  /* --- Core Layout & Centering --- */
   display: flex;
-  overflow: hidden;
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  /* Centers the banner perfectly */
 
-  /* Use vmin to keep the banner's shape and ensure it fits any screen */
-  width: 80vmin;
-  height: 80vmin;
+  /* --- NEW RESPONSIVE SIZING --- */
+  width: 90%;
+  /* Occupy 90% of the screen's width */
+  height: auto;
+  /* Height is determined automatically */
+  aspect-ratio: 1 / 1;
+  /* THIS IS THE FIX: Forces the height to match the width */
   max-width: 450px;
-  /* Optional: Prevents it from getting too large on big screens */
-  max-height: 450px;
-  /* Optional: Prevents it from getting too large on big screens */
+  /* Prevents it from getting too large on desktops */
 
+  /* --- Styling (Unchanged) --- */
   background-color: white;
   border-radius: 60% 60% 42% 42% / 80% 80% 25% 25%;
+  border: 15px solid #8b008b;
+  box-shadow: 0 10px 50px rgba(255, 255, 255, 0.74);
 
-  /* Make the border size responsive */
-  border: 2vmin solid #8b008b;
-
+  /* --- Flexbox for Centering Content (Unchanged) --- */
   justify-content: center;
   align-items: center;
-
-  /* Use clamp() for fluid font size that has a min and max */
-  font-size: clamp(1rem, 5vmin, 2rem);
-  font-weight: bold;
+  overflow: hidden;
   z-index: 101;
-  box-shadow: 0 10px 50px rgba(255, 255, 255, 0.74);
 }
 
 /* Dots */
