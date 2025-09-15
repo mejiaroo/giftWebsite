@@ -200,7 +200,7 @@ footer {
 }
 
 #oval-banner {
-  position: fixed;
+  position: absolute;
   overflow: hidden;
   left: 50%;
   transform: translateX(-50%);
