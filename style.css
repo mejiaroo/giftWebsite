@@ -210,30 +210,30 @@ footer {
   /* Stays below the password box, but visible */
 
   /* NEW: Smaller, more rounded dimensions */
-  width: 14vmin;
+  width: 20%;
   /* Use vmin for responsive sizing */
-  height: 14vmin;
+  height: 20%;
   background-color: #A0522D;
   /* NEW: A standard SaddleBrown for a slightly different brown */
-  border-radius: 45% 45% 45% 45%;
+  border-radius: 45% 45% 45% 45% / 40% 40%;
   /* NEW: Makes them perfectly round */
 }
 
 /* Positioning for the LEFT foot */
 .left-foot {
-  bottom: -4rem;
+  bottom: -3rem;
   /* NEW: Adjust bottom position relative to vmin */
   left: 30%;
-  transform: translateX(-50%) rotate(-5deg);
+  transform: translateX(-50%) rotate(-15deg);
   /* NEW: Less rotation, subtle angle */
 }
 
 /* Positioning for the RIGHT foot */
 .right-foot {
-  bottom: -4rem;
+  bottom: -3rem;
   /* NEW: Adjust bottom position relative to vmin */
   right: 30%;
-  transform: translateX(50%) rotate(5deg);
+  transform: translateX(50%) rotate(15deg);
   /* NEW: Less rotation, subtle angle */
 }
 
