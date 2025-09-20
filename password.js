@@ -12,10 +12,19 @@ document.body.classList.add('no-scroll');
 function checkPassword() {
   const inputHash = sha256(input.value.trim().toLowerCase());
   if (inputHash === correctPasswordHash) {
+    const audio = document.getElementById("my-audio");
+    const toggleBtn = document.getElementById("toggle-btn");
+    // Try to play the audio
+    audio.play().then(() => {
+      toggleBtn.textContent = "⏸";
+    }).catch(error => {
+      console.error("Audio playback failed:", error);
+    });
     overlay.style.display = "none";
     mainContent.style.display = "block";
     document.body.classList.remove('no-scroll');
     errorMsg.style.display = "none"; // hide error if previously shown
+
   } else {
     errorMsg.style.display = "block";
     input.value = "";

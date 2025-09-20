@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,50 +11,26 @@
 </head>
 
 <body>
-    <details>
-        <summary>Play Audio</summary>
-        <audio controls>
-            <source src="audio/lowQual.m4a" type="audio/mp4">
-            <source src="audio/lowQal.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-        </audio>
-    </details>
-    <div class="stars"></div>
     <header>
-        <h1>For Wendi</h1>
-        <p>Something small to repay you</p>
+        <h1>Happy Birthday Wendi!</h1>
+        <p>
+            I've always wanted to make you a special gift. Since I know how much of a creative
+            person you are, I wanted to try my best to make something meaningful in my own way.
+            I hope you like it!
+        </p>
     </header>
 
     <main id="main-content">
-        <section id="gallery">
-            <h2>Our Memories</h2>
-            <div class="gallery-grid">
-                <img src="photo1.jpg" alt="Us at the park">
-                <img src="photo2.jpg" alt="Dinner date">
-                <img src="photo3.jpg" alt="Trip together">
-            </div>
-        </section>
 
-        <section id="timeline">
-            <h2>Our Journey</h2>
-            <ol class="timeline">
-                <li>We first met – June 2022</li>
-                <li>Our first date – July 2022</li>
-                <li>Trip to the beach – December 2022</li>
-                <li>Celebrated 1 year together – June 2023</li>
-            </ol>
-        </section>
+        <section id="gallery"></section>
 
         <section id="letter">
             <h2>A Note for You</h2>
             <p>Placeholder</p>
         </section>
-    </main>
 
-    <footer>
-        <p>I love you</p>
-    </footer>
-    <script src="stars.js"></script>
+    </main>
+    <!--
     <div id="password-overlay">
         <div id="oval-banner">
             <div class="banner-clipper">
@@ -69,8 +46,70 @@
             <div class="foot right-foot"></div>
         </div>
     </div>
+-->
     <script src="password.js"></script>
-    <!-- <script src="dots.js"></script> -->
+    <div id="audio-bar">
+
+        <div class="song-info">
+            <img src="icons/IMG_1508.png" alt="bipy & pakkun" class="album-art">
+            <div class="song-text">
+                <div class="song-name">Cherry Wine</div>
+                <div class="artist-name">Oscar</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="main-controls">
+                <button id="rewind-btn" title="Rewind 10s">
+                    <svg role="img" height="20" width="20" aria-hidden="true" viewBox="0 0 16 16">
+                        <path
+                            d="M3.3 1a.7.7 0 0 1 .7.7v5.15l9.95-5.744a.7.7 0 0 1 1.05.606v12.575a.7.7 0 0 1-1.05.607L4 9.143V14.3a.7.7 0 0 1-.7.7H1.7a.7.7 0 0 1-.7-.7V1.7a.7.7 0 0 1 .7-.7h1.6z">
+                        </path>
+                    </svg>
+                </button>
+                <button id="toggle-btn" title="Play/Pause">
+                    <svg class="icon-play" role="img" height="24" width="24" aria-hidden="true" viewBox="0 0 24 24">
+                        <path
+                            d="M7.05 3.606l13.49 7.788a.7.7 0 010 1.212L7.05 20.394A.7.7 0 016 19.788V4.212a.7.7 0 011.05-.606z">
+                        </path>
+                    </svg>
+                    <svg class="icon-pause" role="img" height="24" width="24" aria-hidden="true" viewBox="0 0 24 24">
+                        <path
+                            d="M5.7 3a.7.7 0 00-.7.7v16.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V3.7a.7.7 0 00-.7-.7H5.7zm10 0a.7.7 0 00-.7.7v16.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V3.7a.7.7 0 00-.7-.7h-2.6z">
+                        </path>
+                    </svg>
+                </button>
+                <button id="skip-btn" title="Skip 10s">
+                    <svg role="img" height="20" width="20" aria-hidden="true" viewBox="0 0 16 16">
+                        <path
+                            d="M12.7 1a.7.7 0 0 0-.7.7v5.15L2.05 1.107A.7.7 0 0 0 1 1.712v12.575a.7.7 0 0 0 1.05.607L12 9.143V14.3a.7.7 0 0 0 .7.7h1.6a.7.7 0 0 0 .7-.7V1.7a.7.7 0 0 0-.7-.7h-1.6z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Seek bar with fast-forward icon -->
+            <div class="seek-container">
+                <span class="time-current">0:00</span>
+                <input id="seek-bar" type="range" min="0" value="0" step="1">
+                <span class="time-duration">0:00</span>
+            </div>
+        </div>
+
+        <div class="extra-controls">
+            <button id="volume-icon" class="icon">🔊</button>
+            <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.3">
+            <a id="download-audio" href="audio/cherryWine_ForWendi.mp3" download="CherryWine_ForWendi.mp3"
+                class="download-btn" title="Download">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon-download" viewBox="0 0 24 24" width="20" height="20"
+                    fill="currentColor" role="img" aria-hidden="true">
+                    <path d="M12 15l5-5h-4V3H9v7H5l5 5zM5 18h14v2H5z"></path>
+                </svg>
+            </a>
+        </div>
+        <audio id="my-audio" src="audio/cherryWine_ForWendi.mp3" preload="metadata"></audio>
+    </div>
+    <script src="audio.js"></script>
 </body>
 
 </html>

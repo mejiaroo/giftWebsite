@@ -7,25 +7,31 @@
 
 /* Body */
 body {
-  font-family: 'Courier New', sans-serif;
-  background: #07090f;
+  display: flex;
+  flex-direction: column;
+  font-family: 'indie flower', cursive;
+  background: #121212;
   color: #333;
-  padding: 20px;
+  padding: min(20px, 5%);
   line-height: 1.6;
+  padding-bottom: 120px;
 }
 
 /* Header */
 header {
+  display: flex;
   text-align: center;
   margin-bottom: 40px;
 }
 
 header h1 {
+  display: flex;
   font-size: 3rem;
   color: #c71585;
 }
 
 header p {
+  display: flex;
   font-size: 1.2rem;
   color: #ff69b4;
   margin-top: 10px;
@@ -37,7 +43,6 @@ section {
   padding: 20px;
   border-radius: 15px;
   background-color: #ffe4e1;
-  /* very soft pink */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -207,34 +212,23 @@ footer {
 .foot {
   position: absolute;
   z-index: 100;
-  /* Stays below the password box, but visible */
-
-  /* NEW: Smaller, more rounded dimensions */
   width: 20%;
-  /* Use vmin for responsive sizing */
   height: 20%;
   background-color: #A0522D;
-  /* NEW: A standard SaddleBrown for a slightly different brown */
   border-radius: 45% 45% 45% 45% / 40% 40%;
-  /* NEW: Makes them perfectly round */
 }
 
-/* Positioning for the LEFT foot */
 .left-foot {
   bottom: -3rem;
-  /* NEW: Adjust bottom position relative to vmin */
   left: 30%;
   transform: translateX(-50%) rotate(-15deg);
-  /* NEW: Less rotation, subtle angle */
 }
 
 /* Positioning for the RIGHT foot */
 .right-foot {
   bottom: -3rem;
-  /* NEW: Adjust bottom position relative to vmin */
   right: 30%;
   transform: translateX(50%) rotate(15deg);
-  /* NEW: Less rotation, subtle angle */
 }
 
 #password-input:hover {
@@ -242,128 +236,335 @@ footer {
 }
 
 .no-scroll {
-  overflow: hidden;
+  overflow: visible;
 }
 
-.stars {
+#audio-bar {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: -1;
-}
-
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background-color: #fff;
-  border-radius: 50%;
-}
-
-@keyframes shoot {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-  }
-
-  100% {
-    transform: translate(var(--dx), var(--dy)) scale(0.5);
-    opacity: 0;
-  }
-}
-
-summary {
-  font-size: 18px;
-  font-weight: bold;
+  background: #000;
+  font-family: "circular", sans-serif;
   color: white;
+  padding: 15px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  /* Lower z-index than overlay */
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  gap: 20px;
+}
+
+.song-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.album-art {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
   cursor: pointer;
-  list-style: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-right: 12px;
+  position: relative;
+  z-index: 101;
 }
 
-summary::-webkit-details-marker {
-  display: none;
-  /* removes the default arrow */
-}
-
-summary:hover {
-  color: rgb(229, 229, 173);
-}
-
-details {
-  border: 2px solid #444;
-  border-radius: 10px;
-  padding: 10px;
-  width: 250px;
-  background: #f9f9f9;
-  transition: all 0.3s ease;
-}
-
-/* When user clicks and it expands */
-details[open] {
-  background: #ffe4e1;
-  /* pink background */
-  border-radius: 20px;
-  /* rounder corners */
+.album-art:hover {
+  transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-details summary {
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 18px;
-  color: pink;
-  padding: 5px;
+/* Expanded state */
+.album-art.expanded {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vmin;
+  height: 80vmin;
+  z-index: 1001;
+  border-radius: 8px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
 }
 
-/* The content box */
-details>*:not(summary) {
+/* Dark overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  /* shorthand for top/right/bottom/left:0 */
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Prevent body scroll when expanded */
+body.overlay-active {
   overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.5s ease, padding 0.3s ease;
-  padding: 0;
 }
 
-/* Expand smoothly */
-details[open]>*:not(summary) {
-  max-height: 200px;
-  /* adjust to fit your content */
-  padding: 10px 0;
+.song-name {
+  font-weight: bold;
 }
 
-audio {
-  width: 10rem;
-  height: 6rem;
+.artist-name {
+  font-size: 0.8rem;
+  opacity: 0.7;
 }
 
+/* 2. Center Column: Player Controls */
+.player-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.main-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+/* --- Control Button Styling --- */
+.extra-controls button {
+  cursor: pointer;
+}
+
+.main-controls button {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-controls button svg {
+  fill: #b3b3b3;
+  /* Default icon color */
+  transition: fill 0.2s ease;
+}
+
+.main-controls button:hover svg {
+  fill: white;
+}
+
+#toggle-btn {
+  background-color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+#toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+#toggle-btn svg {
+  fill: black;
+}
+
+#toggle-btn .icon-play {
+  display: inline;
+}
+
+#toggle-btn .icon-pause {
+  display: none;
+}
+
+#toggle-btn.playing .icon-play {
+  display: none;
+}
+
+#toggle-btn.playing .icon-pause {
+  display: inline;
+}
+
+
+/* --- Slider Styling (for Seek and Volume) --- */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Track */
+input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #fff var(--seek-before-width, 0%), #535353 var(--seek-before-width, 0%));
+  height: 4px;
+  border-radius: 4px;
+}
+
+input[type="range"]::-moz-range-track {
+  background: #535353;
+  height: 4px;
+  border-radius: 4px;
+}
+
+/* Thumb (the draggable circle) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -4px;
+  /* Vertically center */
+  background-color: #fff;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+}
+
+input[type="range"]::-moz-range-thumb {
+  border: none;
+  background-color: #fff;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+}
+
+.seek-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+.time-current,
+.time-duration {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  min-width: 35px;
+  text-align: center;
+}
+
+#seek-bar {
+  flex-grow: 1;
+}
+
+.extra-controls button {
+  background: none;
+  border: none;
+}
+
+.extra-controls button:hover {
+  transform: scale(1.15);
+}
+
+.extra-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.download-btn {
+  color: #b3b3b3;
+  text-decoration: none;
+}
+
+.download-btn:hover {
+  color: white;
+}
+
+.download-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.polaroid {
+  background: white;
+  padding: 10px 10px 30px 10px;
+  width: 200px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  transform: rotate(-2deg);
+  /* slightly tilted */
+  margin: 20px;
+  display: inline-block;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.polaroid img {
+  width: 100%;
+  display: block;
+}
+
+.caption {
+  font-family: 'Indie Flower', cursive;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.polaroid:hover {
+  transform: scale(1.05) rotate(0deg);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* 📱 Mobile adjustments */
 @media (max-width: 768px) {
-  /* Styles for tablets and phones */
-
   header h1 {
     font-size: 2.5rem;
-    /* Make the main title a bit smaller */
   }
 
   .gallery-grid {
     flex-direction: column;
-    /* Stack the pictures vertically */
     align-items: center;
-    /* Center them */
   }
 
   .gallery-grid img {
     width: 90%;
-    /* Make images take up most of the screen width */
     height: auto;
-    /* Adjust height automatically */
   }
 
   #letter p,
   .timeline {
     max-width: 90%;
-    /* Allow the text to use more of the screen */
+  }
+
+  #audio-bar {
+    width: 95vw;
+    gap: 3rem;
+    padding: 1rem;
+  }
+
+  #audio-bar button {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  #audio-bar input[type="range"] {
+    max-width: 100px;
+  }
+
+  .controls {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #seek-bar {
+    width: 100%;
+  }
+
+  .volume-container {
+    margin-left: 0;
+    margin-top: 5px;
   }
 }
