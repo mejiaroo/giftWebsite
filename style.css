@@ -236,7 +236,7 @@ footer {
 }
 
 .no-scroll {
-  overflow: visible;
+  overflow: hidden;
 }
 
 #audio-bar {
