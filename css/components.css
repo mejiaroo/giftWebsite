@@ -1,0 +1,28 @@
+.polaroid {
+    background: white;
+    padding: 10px 10px 30px 10px;
+    width: 200px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    transform: rotate(-2deg);
+    /* slightly tilted */
+    margin: 20px;
+    display: inline-block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.polaroid img {
+    width: 100%;
+    display: block;
+}
+
+.caption {
+    font-family: 'Indie Flower', cursive;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.polaroid:hover {
+    transform: scale(1.05) rotate(0deg);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+}

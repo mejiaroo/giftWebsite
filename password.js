@@ -16,7 +16,7 @@ function checkPassword() {
     const toggleBtn = document.getElementById("toggle-btn");
     // Try to play the audio
     audio.play().then(() => {
-      toggleBtn.textContent = "⏸";
+      toggleBtn.classList.add("playing"); // Add playing class to show pause icon
     }).catch(error => {
       console.error("Audio playback failed:", error);
     });

@@ -1,0 +1,59 @@
+/* 📱 Mobile adjustments */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    .gallery-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gallery-grid img {
+        width: 90%;
+        height: auto;
+    }
+
+    #letter p,
+    .timeline {
+        max-width: 90%;
+    }
+
+    #audio-bar {
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 2px 2px;
+    }
+
+    .song-info {
+        width: 10%;
+        min-width: 64px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .controls {
+        width: 60%;
+    }
+
+    .controls button {
+        margin: -5px 0;
+    }
+
+    .extra-controls {
+        width: 20%;
+        flex-direction: row;
+        justify-content: flex-end;
+        min-width: unset;
+        gap: 2px;
+    }
+
+    .song-text,
+    .time-current,
+    .time-duration,
+    .download-btn {
+        display: none;
+    }
+}
