@@ -3,7 +3,6 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'indie flower', cursive;
-    background: #121212;
     color: #333;
     padding: min(20px, 5%);
     line-height: 1.6;

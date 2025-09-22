@@ -1,0 +1,34 @@
+/* Base style for a single star (this is unchanged) */
+.star {
+    position: absolute;
+    background-color: #FFF5EE;
+    border-radius: 50%;
+    animation-name: twinkle;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.2;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#star-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: #121212;
+}

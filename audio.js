@@ -11,6 +11,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const albumArt = document.querySelector(".album-art");
     const volumeIcon = document.getElementById("volume-icon");
 
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isIos) {
+        const extraCtrls = document.querySelector(".extra-controls");
+        volumeSlider.style.display = 'none';
+        volumeSlider.style.position = 'absolute';
+        volumeIcon.style.display = 'none';
+        volumeIcon.style.disply = 'absolute';
+        extraCtrls.style.minWidth = 0;
+        extraCtrls.style.width = 0;
+
+    }
+
     let lastVolume = 0.3; // Initialize with the default volume
 
     // --- Helper Functions ---

@@ -1,12 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // This function now runs asynchronously to avoid blocking the main thread.
     buildGallery();
 });
 
-/**
- * This function finds or creates a single overlay for the entire page to use.
- * This prevents conflicts between different scripts trying to create their own overlays.
- */
 function getOrCreateOverlay() {
     let overlay = document.querySelector('.page-overlay');
     if (!overlay) {
@@ -14,12 +9,21 @@ function getOrCreateOverlay() {
         overlay.className = 'page-overlay';
         document.body.appendChild(overlay);
 
-        // Add a general click listener to the overlay itself
+        // Updated Overlay Click Listener
         overlay.addEventListener('click', () => {
-            // Find any active element (polaroid or album art) and close it
             const expandedElement = document.querySelector('.polaroid.expanded, .album-art.expanded');
+
             if (expandedElement) {
+                // Remove the expanded class to collapse it
                 expandedElement.classList.remove('expanded');
+
+                // Check if the closing element contains a video
+                const video = expandedElement.querySelector('video');
+                if (video) {
+                    // Reset the video state
+                    video.muted = true;
+                    video.controls = false;
+                }
             }
 
             // Hide the overlay and re-enable body scrolling
@@ -37,13 +41,43 @@ async function buildGallery() {
         return;
     }
 
-    // --- Configuration ---
     const photoFolders = {
-        '1firstVisit': ["airport.jpg", "firstTimeApartment.jpg", "cairoUgg.jpg"],
-        '2newYork': ["firstTrain.png", "secondTrain.png", "firstDate.jpg"],
-        '3secondVisit': ["arriveHouston.jpg", "infamousCairo.jpg", "cairoRugLoaf.jpg", "firstGalleria.jpg", "chickenKatsuCurry.jpg", "flowers.jpg", "pakkunTakingPhoto1.jpg", "pakkunTakingPhoto2.jpg", "matcha1.jpg", "matcha2.jpg", "matcha3.jpg", "firstCluckers.jpg", "cairoBirthday1.jpg", "cairoBirthday2.jpg", "cairoBirthday3.jpg", "cairoBirthday4.jpg", "cairoBirthday5.jpg", "cairoBirthday6.jpg", "cairoBirthday7.jpg", "cairoBirthday8.jpg", "cairoBirthday9.jpg", "cairoBirthday10.jpg", "cairoBirthday11.jpg", "flowers2.jpg"],
-        '4maineTrip': ["preparingForMaine1.jpg", "preparingForMaine2.jpg", "preparingForMaine3.jpg", "firstTimeCherryWine.png", "funnyPakkunSleeping.jpg", "portlandRun1.jpg", "portlandRun2.jpg", "eventide1.jpg", "eventide2.jpg", "eventide3.jpg", "creepPhoto1.jpg", "firstTimeDragonfruit.jpg", "lobsterRollFlight1.jpg", "lobsterRollFlight2.jpg", "lighthouse1.jpg", "lighthouse2.jpg", "lighthouse3.jpg", "lighthouse4.jpg", "lighthouse5.jpg", "lighthouse6.jpg", "lighthouse7.jpg", "pakkunIceCream1.jpg", "theHoneyPaw.jpg", "tapNBarrelTavern1.jpg", "tapNBarrelTavern2.jpg", "tapNBarrelTavern3.jpg", "tapNBarrelTavern4.jpg", "tapNBarrelTavern5.jpg", "creepPhoto2.jpg", "prettyPakkun.jpg", "pakkunIceCream2.jpg", "pakkunRandom1.jpg", "pakkunGnarly.jpg", "pakkunRandom2.jpg", "funnyCannon.jpg", "pakkunIceCream3.jpg", "pakkunIceCream4.jpg", "hiking1.jpg", "hikingSelfie1.jpg", "hikingSelfie2.jpg", "hiking3.jpg", "hikingSelfie3.jpg", "hiking2.jpg", "hiking4.jpg", "hiking5.jpg", "hiking6.jpg", "hiking7.jpg", "hiking8.jpg", "hiking9.jpg", "hikingSelfie4.jpg", "hikingSelfie5.jpg", "hiking10.jpg", "hiking11.jpg", "hiking12.jpg", "hiking13.jpg", "hiking14.jpg", "hiking15.jpg", "hiking16.jpg", "hiking17.jpg", "hiking18.jpg", "hikingSelfie6.jpg", "hiking19.jpg", "hiking20.jpg", "hiking21.jpg", "hiking22.jpg", "hiking23.jpg", "hiking24.jpg", "hiking25.jpg", "hikingSelfie7.jpg", "hiking26.jpg", "hiking27.jpg", "tent1.jpg", "tent2.jpg", "campfire1.jpg", "campfire2.jpg", "campfire3.jpg", "campfire4.jpg", "tent3.jpg", "thriveJuiceBar1.jpg", "thriveJuiceBar2.jpg", "thriveJuiceBar3.jpg", "schoodicPoint1.jpg", "schoodicPoint2.jpg", "ravensNest1.jpg", "ravensNest2.jpg", "ravensNest3.jpg", "hikingSelfie8.jpg", "ravensNest4.jpg", "picnicBH.jpg", "beerFlight.jpg", "failedVeggies.jpg", "cadillacMountain.jpg", "randomPitstop.jpg", "mangiaToscano.jpg", "frontOfHouse.jpg"],
-        '5thirdVisit': ["chopped.jpg", "pakkunNaruto.jpg", "firstTenSecond.jpg", "imChopped.jpg", "wigglyScreen.jpg", "ilyPakkun.jpg", "ilyPakkun2.jpg", "wtfIsMyFace.jpg", "pakkunMatcha.jpg", "bestBirthday.jpg", "bestBirthday2.jpg", "bestBirthday3.jpg", "ilyPakkun3.jpg"],
+        '1firstVisit': ["airport", "firstTimeApartment", "cairoUgg"],
+        '2newYork': ["firstTrain", "secondTrain", "firstDate"],
+        '3secondVisit': [
+            "arriveHouston", "infamousCairo", "cairoRugLoaf", "firstGalleria",
+            "chickenKatsuCurry", "flowers", "pakkunTakingPhoto1", "pakkunTakingPhoto2",
+            "matcha1", "matcha2", "matcha3", "firstCluckers", "cairoBirthday1",
+            "cairoBirthday2", "cairoBirthday3", "cairoBirthday4", "cairoBirthday5",
+            "cairoBirthday6", "cairoBirthday7", "cairoBirthday8", "cairoBirthday9",
+            "cairoBirthday10", "cairoBirthday11", "flowers2"
+        ],
+        '4maineTrip': [
+            "preparingForMaine1", "preparingForMaine2", "preparingForMaine3",
+            "firstTimeCherryWine", "funnyPakkunSleeping", "portlandRun1", "portlandRun2",
+            "eventide1", "eventide2", "eventide3", "creepPhoto1", "firstTimeDragonfruit",
+            "lobsterRollFlight1", "lobsterRollFlight2", "lighthouse1", "lighthouse2",
+            "lighthouse3", "lighthouse4", "lighthouse5", "lighthouse6", "lighthouse7",
+            "pakkunIceCream1", "theHoneyPaw", "tapNBarrelTavern1", "tapNBarrelTavern2",
+            "tapNBarrelTavern3", "tapNBarrelTavern4", "tapNBarrelTavern5", "creepPhoto2",
+            "prettyPakkun", "pakkunIceCream2", "pakkunRandom1", "pakkunGnarly", "pakkunRandom2",
+            "funnyCannon", "pakkunIceCream3", "pakkunIceCream4", "hiking1", "hikingSelfie1",
+            "hikingSelfie2", "hiking3", "hikingSelfie3", "hiking2", "hiking4", "hiking5",
+            "hiking6", "hiking7", "hiking8", "hiking9", "hikingSelfie4", "hikingSelfie5",
+            "hiking10", "hiking11", "hiking12", "hiking13", "hiking14", "hiking15",
+            "hiking16", "hiking17", "hiking18", "hikingSelfie6", "hiking19", "hiking20",
+            "hiking21", "hiking22", "hiking23", "hiking24", "hiking25", "hikingSelfie7",
+            "hiking26", "hiking27", "tent1", "tent2", "campfire1", "campfire2", "campfire3",
+            "campfire4", "tent3", "thriveJuiceBar1", "thriveJuiceBar2", "thriveJuiceBar3",
+            "schoodicPoint1", "schoodicPoint2", "ravensNest1", "ravensNest2", "ravensNest3",
+            "hikingSelfie8", "ravensNest4", "picnicBH", "beerFlight", "failedVeggies",
+            "cadillacMountain", "randomPitstop", "mangiaToscano", "frontOfHouse", "cuteVideo.mp4"
+        ],
+        '5thirdVisit': [
+            "chopped", "pakkunNaruto", "firstTenSecond", "imChopped", "wigglyScreen",
+            "ilyPakkun", "ilyPakkun2", "wtfIsMyFace", "pakkunMatcha", "bestBirthday",
+            "bestBirthday2", "bestBirthday3", "ilyPakkun3", "photoBooth.mp4"
+        ],
     };
     const sectionTitles = {
         '1firstVisit': "First Time Meeting",
@@ -53,155 +87,45 @@ async function buildGallery() {
         '5thirdVisit': "Third Time's a Charm",
     };
     const photoCaptions = {
-        "airport.jpg": "Made it to the airport, nervous but excited for our first time meeting!",
-        "firstTimeApartment.jpg": "",
-        "cairoUgg.jpg": "",
-        "firstTrain.png": "",
-        "secondTrain.png": "",
-        "firstDate.jpg": "",
-        "arriveHouston.jpg": "",
-        "infamousCairo.jpg": "",
-        "cairoRugLoaf.jpg": "",
-        "firstGalleria.jpg": "",
-        "chickenKatsuCurry.jpg": "",
-        "flowers.jpg": "",
-        "pakkunTakingPhoto1.jpg": "",
-        "pakkunTakingPhoto2.jpg": "",
-        "matcha1.jpg": "",
-        "matcha2.jpg": "",
-        "matcha3.jpg": "",
-        "firstCluckers.jpg": "",
-        "cairoBirthday1.jpg": "",
-        "cairoBirthday2.jpg": "",
-        "cairoBirthday3.jpg": "",
-        "cairoBirthday4.jpg": "",
-        "cairoBirthday5.jpg": "",
-        "cairoBirthday6.jpg": "",
-        "cairoBirthday7.jpg": "",
-        "cairoBirthday8.jpg": "",
-        "cairoBirthday9.jpg": "",
-        "cairoBirthday10.jpg": "",
-        "cairoBirthday11.jpg": "",
-        "flowers2.jpg": "",
-        "preparingForMaine1.jpg": "",
-        "preparingForMaine2.jpg": "",
-        "preparingForMaine3.jpg": "",
-        "firstTimeCherryWine.png": "",
-        "funnyPakkunSleeping.jpg": "",
-        "portlandRun1.jpg": "",
-        "portlandRun2.jpg": "",
-        "eventide1.jpg": "",
-        "eventide2.jpg": "",
-        "eventide3.jpg": "",
-        "creepPhoto1.jpg": "",
-        "firstTimeDragonfruit.jpg": "",
-        "lobsterRollFlight1.jpg": "",
-        "lobsterRollFlight2.jpg": "",
-        "lighthouse1.jpg": "",
-        "lighthouse2.jpg": "",
-        "lighthouse3.jpg": "",
-        "lighthouse4.jpg": "",
-        "lighthouse5.jpg": "",
-        "lighthouse6.jpg": "",
-        "lighthouse7.jpg": "",
-        "pakkunIceCream1.jpg": "",
-        "theHoneyPaw.jpg": "",
-        "tapNBarrelTavern1.jpg": "",
-        "tapNBarrelTavern2.jpg": "",
-        "tapNBarrelTavern3.jpg": "",
-        "tapNBarrelTavern4.jpg": "",
-        "tapNBarrelTavern5.jpg": "",
-        "creepPhoto2.jpg": "",
-        "prettyPakkun.jpg": "",
-        "pakkunIceCream2.jpg": "",
-        "pakkunRandom1.jpg": "",
-        "pakkunGnarly.jpg": "",
-        "pakkunRandom2.jpg": "",
-        "funnyCannon.jpg": "",
-        "pakkunIceCream3.jpg": "",
-        "pakkunIceCream4.jpg": "",
-        "hiking1.jpg": "",
-        "hikingSelfie1.jpg": "",
-        "hikingSelfie2.jpg": "",
-        "hiking3.jpg": "",
-        "hikingSelfie3.jpg": "",
-        "hiking2.jpg": "",
-        "hiking4.jpg": "",
-        "hiking5.jpg": "",
-        "hiking6.jpg": "",
-        "hiking7.jpg": "",
-        "hiking8.jpg": "",
-        "hiking9.jpg": "",
-        "hikingSelfie4.jpg": "",
-        "hikingSelfie5.jpg": "",
-        "hiking10.jpg": "",
-        "hiking11.jpg": "",
-        "hiking12.jpg": "",
-        "hiking13.jpg": "",
-        "hiking14.jpg": "",
-        "hiking15.jpg": "",
-        "hiking16.jpg": "",
-        "hiking17.jpg": "",
-        "hiking18.jpg": "",
-        "hikingSelfie6.jpg": "",
-        "hiking19.jpg": "",
-        "hiking20.jpg": "",
-        "hiking21.jpg": "",
-        "hiking22.jpg": "",
-        "hiking23.jpg": "",
-        "hiking24.jpg": "",
-        "hiking25.jpg": "",
-        "hikingSelfie7.jpg": "",
-        "hiking26.jpg": "",
-        "hiking27.jpg": "",
-        "tent1.jpg": "",
-        "tent2.jpg": "",
-        "campfire1.jpg": "",
-        "campfire2.jpg": "",
-        "campfire3.jpg": "",
-        "campfire4.jpg": "",
-        "tent3.jpg": "",
-        "thriveJuiceBar1.jpg": "",
-        "thriveJuiceBar2.jpg": "",
-        "thriveJuiceBar3.jpg": "",
-        "schoodicPoint1.jpg": "",
-        "schoodicPoint2.jpg": "",
-        "ravensNest1.jpg": "",
-        "ravensNest2.jpg": "",
-        "ravensNest3.jpg": "",
-        "hikingSelfie8.jpg": "",
-        "ravensNest4.jpg": "",
-        "picnicBH.jpg": "",
-        "beerFlight.jpg": "",
-        "failedVeggies.jpg": "",
-        "cadillacMountain.jpg": "",
-        "randomPitstop.jpg": "",
-        "mangiaToscano.jpg": "",
-        "frontOfHouse.jpg": "",
-        "chopped.jpg": "",
-        "pakkunNaruto.jpg": "",
-        "firstTenSecond.jpg": "",
-        "imChopped.jpg": "",
-        "wigglyScreen.jpg": "",
-        "ilyPakkun.jpg": "",
-        "ilyPakkun2.jpg": "",
-        "wtfIsMyFace.jpg": "",
-        "pakkunMatcha.jpg": "",
-        "bestBirthday.jpg": "",
-        "bestBirthday2.jpg": "",
-        "bestBirthday3.jpg": "",
-        "ilyPakkun3.jpg": ""
+        "airport": "Made it to the airport, nervous but excited for our first time meeting!",
+        "firstTimeApartment": "Back from Austin, first time seeing CAIROOOO",
+        "cairoUgg": "Cairo seems to like the stench of my feet...",
+        "firstTrain": "A strange but necessary record to keep to commemorate our rendezvous in new york",
+        "secondTrain": "A strange but necessary record to keep to commemorate our rendezvous in new york pt.2",
+        "firstDate": "Stolen directly from your notion jone... my first time being stood up but I look so happy",
+        "arriveHouston": "SECOND time going to tx to see you, just as nervous as the first time",
+        "infamousCairo": "", "cairoRugLoaf": "", "firstGalleria": "", "chickenKatsuCurry": "",
+        "flowers": "", "pakkunTakingPhoto1": "", "pakkunTakingPhoto2": "", "matcha1": "", "matcha2": "",
+        "matcha3": "", "firstCluckers": "", "cairoBirthday1": "", "cairoBirthday2": "", "cairoBirthday3": "",
+        "cairoBirthday4": "", "cairoBirthday5": "", "cairoBirthday6": "", "cairoBirthday7": "", "cairoBirthday8": "",
+        "cairoBirthday9": "", "cairoBirthday10": "", "cairoBirthday11": "", "flowers2": "", "preparingForMaine1": "",
+        "preparingForMaine2": "", "preparingForMaine3": "", "firstTimeCherryWine": "", "funnyPakkunSleeping": "",
+        "portlandRun1": "", "portlandRun2": "", "eventide1": "", "eventide2": "", "eventide3": "", "creepPhoto1": "",
+        "firstTimeDragonfruit": "", "lobsterRollFlight1": "", "lobsterRollFlight2": "", "lighthouse1": "", "lighthouse2": "",
+        "lighthouse3": "", "lighthouse4": "", "lighthouse5": "", "lighthouse6": "", "lighthouse7": "", "pakkunIceCream1": "",
+        "theHoneyPaw": "", "tapNBarrelTavern1": "", "tapNBarrelTavern2": "", "tapNBarrelTavern3": "", "tapNBarrelTavern4": "",
+        "tapNBarrelTavern5": "", "creepPhoto2": "", "prettyPakkun": "", "pakkunIceCream2": "", "pakkunRandom1": "",
+        "pakkunGnarly": "", "pakkunRandom2": "", "funnyCannon": "", "pakkunIceCream3": "", "pakkunIceCream4": "",
+        "hiking1": "", "hikingSelfie1": "", "hikingSelfie2": "", "hiking3": "", "hikingSelfie3": "", "hiking2": "",
+        "hiking4": "", "hiking5": "", "hiking6": "", "hiking7": "", "hiking8": "", "hiking9": "", "hikingSelfie4": "",
+        "hikingSelfie5": "", "hiking10": "", "hiking11": "", "hiking12": "", "hiking13": "", "hiking14": "", "hiking15": "",
+        "hiking16": "", "hiking17": "", "hiking18": "", "hikingSelfie6": "", "hiking19": "", "hiking20": "", "hiking21": "",
+        "hiking22": "", "hiking23": "", "hiking24": "", "hiking25": "", "hikingSelfie7": "", "hiking26": "", "hiking27": "",
+        "tent1": "", "tent2": "", "campfire1": "", "campfire2": "", "campfire3": "", "campfire4": "", "tent3": "",
+        "thriveJuiceBar1": "", "thriveJuiceBar2": "", "thriveJuiceBar3": "", "schoodicPoint1": "", "schoodicPoint2": "",
+        "ravensNest1": "", "ravensNest2": "", "ravensNest3": "", "hikingSelfie8": "", "ravensNest4": "", "picnicBH": "",
+        "beerFlight": "", "failedVeggies": "", "cadillacMountain": "", "randomPitstop": "", "mangiaToscano": "",
+        "frontOfHouse": "", "chopped": "", "pakkunNaruto": "", "firstTenSecond": "", "imChopped": "", "wigglyScreen": "",
+        "ilyPakkun": "", "ilyPakkun2": "", "wtfIsMyFace": "", "pakkunMatcha": "", "bestBirthday": "", "bestBirthday2": "",
+        "bestBirthday3": "", "ilyPakkun3": ""
     };
-
-    // Get the single, shared overlay for the page
     const overlay = getOrCreateOverlay();
 
-    // Helper function to pause execution and let the browser handle user input
     function yieldToMain() {
         return new Promise(resolve => setTimeout(resolve, 0));
     }
 
-    galleryContainer.innerHTML = ''; // Clear existing content
+    galleryContainer.innerHTML = '';
 
     for (const folderName in photoFolders) {
         const photoFilenames = photoFolders[folderName];
@@ -221,55 +145,89 @@ async function buildGallery() {
         const BATCH_SIZE = 5;
         for (let i = 0; i < photoFilenames.length; i++) {
             const filename = photoFilenames[i];
-
             const polaroidDiv = document.createElement('div');
             polaroidDiv.className = 'polaroid';
 
-            const img = document.createElement('img');
-            img.src = `images/${folderName}/${filename}`;
-            img.alt = filename || "Gallery image";
-            img.loading = 'lazy';
-            img.width = 200;
-            img.height = 200;
+            if (filename.endsWith('.mp4')) {
+                // --- VIDEO LOGIC ---
+                const video = document.createElement('video');
+                video.src = `images/${folderName}/${filename}`;
+                video.loop = true;
+                video.muted = true;
+                video.playsInline = true; // Essential for iOS
+                video.width = 200;
+                video.height = 200;
+                polaroidDiv.appendChild(video);
 
-            // Add a fallback for broken images
-            img.onerror = function () {
-                this.onerror = null;
-                this.src = 'https://placehold.co/200x200/ffe4e1/8b008b?text=Image+Missing';
-            };
+                // Add click listener to the video to handle expansion
+                video.addEventListener('click', () => {
+                    // If already expanded, do nothing to let controls work
+                    if (polaroidDiv.classList.contains('expanded')) {
+                        return;
+                    }
 
-            const captionDiv = document.createElement('div');
-            captionDiv.className = 'caption';
-            captionDiv.textContent = photoCaptions[filename] || '';
+                    // Close any other item that is currently expanded
+                    const currentlyExpanded = document.querySelector('.polaroid.expanded, .album-art.expanded');
+                    if (currentlyExpanded) {
+                        currentlyExpanded.classList.remove('expanded');
+                        const otherVideo = currentlyExpanded.querySelector('video');
+                        if (otherVideo) {
+                            otherVideo.muted = true;
+                            otherVideo.controls = false;
+                        }
+                    }
 
-            polaroidDiv.appendChild(img);
-            polaroidDiv.appendChild(captionDiv);
-            gridDiv.appendChild(polaroidDiv);
+                    // Expand this video's polaroid
+                    polaroidDiv.classList.add('expanded');
+                    overlay.classList.add('visible');
+                    document.body.classList.add('overlay-active');
+                    video.muted = false;
+                    video.controls = true; // Show player controls
+                });
 
-            // Add click listener to each polaroid
-            polaroidDiv.addEventListener('click', () => {
-                if (polaroidDiv.classList.contains('expanded')) {
-                    polaroidDiv.classList.remove('expanded');
-                    overlay.classList.remove('visible');
-                    document.body.classList.remove('overlay-active');
-                } else {
-                    // First, close any other element that might be open
+            } else {
+                // --- IMAGE LOGIC ---
+                const img = document.createElement('img');
+                const smallImgPath = `images/${folderName}/thumbnails/${filename}-400w.webp`;
+                const largeImgPath = `images/${folderName}/large/${filename}-1200w.webp`;
+
+                img.src = smallImgPath;
+                img.srcset = `${smallImgPath} 400w, ${largeImgPath} 1200w`;
+                img.sizes = "(max-width: 768px) 70vw, 250px";
+                img.alt = filename;
+                img.loading = 'lazy';
+                img.width = 200;
+                img.height = 200;
+                img.onerror = function () {
+                    this.onerror = null;
+                    this.src = 'https://placehold.co/200x200/ffe4e1/8b008b?text=Image+Missing';
+                };
+                polaroidDiv.appendChild(img);
+
+                // Add click listener to the image's polaroid to handle expansion
+                polaroidDiv.addEventListener('click', () => {
+                    if (polaroidDiv.classList.contains('expanded')) {
+                        return; // Clicking an expanded image does nothing
+                    }
                     const currentlyExpanded = document.querySelector('.polaroid.expanded, .album-art.expanded');
                     if (currentlyExpanded) {
                         currentlyExpanded.classList.remove('expanded');
                     }
-                    // Then, expand the clicked one
                     polaroidDiv.classList.add('expanded');
                     overlay.classList.add('visible');
                     document.body.classList.add('overlay-active');
-                }
-            });
+                });
+            }
 
-            // After a batch, pause to allow the browser to respond to user input
+            const captionDiv = document.createElement('div');
+            captionDiv.className = 'caption';
+            captionDiv.textContent = photoCaptions[filename.replace('.mp4', '')] || '';
+            polaroidDiv.appendChild(captionDiv);
+            gridDiv.appendChild(polaroidDiv);
+
             if ((i + 1) % BATCH_SIZE === 0) {
                 await yieldToMain();
             }
         }
     }
 }
-

@@ -70,6 +70,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
+    padding: 6px 0px;
 }
 
 #toggle-btn {
@@ -87,6 +88,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    padding-right: 6px;
 }
 
 /* --- Control Button Styling --- */
