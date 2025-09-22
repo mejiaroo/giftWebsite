@@ -94,7 +94,7 @@ async function buildGallery() {
         "secondTrain": "A strange but necessary record to keep to commemorate our rendezvous in new york pt.2",
         "firstDate": "Stolen directly from your notion jone... my first time being stood up but I look so happy",
         "arriveHouston": "SECOND time going to tx to see you, just as nervous as the first time",
-        "infamousCairo": "THE infamous cairo picture. He looks very dapper in his birthday fit",
+        "infamousCairo": "THE infamous cairo picture. It will be remembered in history books",
         "cairoRugLoaf": "My first time witnessing cairo on the apeach rug. He was timid from the start",
         "firstGalleria": "Our first time going to the galleria. This was the only photo I had to remember it...",
         "chickenKatsuCurry": "You cooked us chicken katsu curry :3 it was very yummy",
