@@ -77,3 +77,38 @@ footer {
     color: #555;
     font-style: italic;
 }
+
+#letter {
+    width: min(90%, 700px);
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    text-align: left;
+}
+
+#letter h2 {
+    text-align: center;
+}
+
+#intro {
+    margin: 0 0 15px 0;
+    padding: 20px 0px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: left !important;
+}
+
+#end {
+    display: flex;
+    align-items: baseline;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: left !important;
+}
+
+.sticker {
+    height: 50px;
+    width: auto;
+    position: relative;
+    top: 5px;
+}
