@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const volumeIcon = document.getElementById("volume-icon");
 
     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isIos) {
+    if (isIOS) {
         const extraCtrls = document.querySelector(".extra-controls");
         volumeSlider.style.display = 'none';
         volumeSlider.style.position = 'absolute';
         volumeIcon.style.display = 'none';
-        volumeIcon.style.disply = 'absolute';
+        volumeIcon.style.display = 'absolute';
         extraCtrls.style.minWidth = 0;
         extraCtrls.style.width = 0;
 

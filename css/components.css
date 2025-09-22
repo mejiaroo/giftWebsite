@@ -21,6 +21,7 @@
 
 .caption {
     font-family: 'Indie Flower', cursive;
+    font-weight: 600;
     font-size: 14px;
     text-align: center;
     margin-top: 10px;
@@ -55,4 +56,28 @@
 .lazy-image.loaded {
     filter: blur(0);
     transform: scale(1);
+}
+
+#bipy-polaroid {
+    position: relative;
+    overflow: visible;
+}
+
+#bipy-polaroid::after {
+    content: '';
+    position: absolute;
+
+    background-image: url('../icons/sillyBipy.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    width: min(80px, 40%);
+    height: min(80px, 40%);
+
+    bottom: -20px;
+    right: -30px;
+
+    transform: rotate(15deg);
+
+    z-index: 101;
 }
