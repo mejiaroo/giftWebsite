@@ -1,17 +1,22 @@
 .polaroid {
-    background: white;
-    padding: 10px 10px 30px 10px;
-    width: 200px;
+    background: #F5E9DA;
+    padding: 15px;
+    width: clamp(150px, 30vw, 250px);
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
     transform: rotate(-2deg);
     /* slightly tilted */
-    margin: 20px;
-    display: inline-block;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1.2;
+    cursor: pointer;
 }
 
 .polaroid img {
     width: 100%;
+    display: block;
+    object-fit: cover;
     display: block;
 }
 
@@ -20,9 +25,25 @@
     font-size: 14px;
     text-align: center;
     margin-top: 10px;
+    color: #b32d57;
 }
 
 .polaroid:hover {
+    padding: 20px;
     transform: scale(1.05) rotate(0deg);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+}
+
+.lazy-image {
+    /* Start with a blur effect */
+    filter: blur(10px);
+    transition: filter 0.5s ease -in -out;
+    transform: scale(1.1);
+    /* Slightly zoomed in to hide blurry edges */
+}
+
+.lazy-image.loaded {
+    /* When the 'loaded' class is added, remove the blur */
+    filter: blur(0);
+    transform: scale(1);
 }

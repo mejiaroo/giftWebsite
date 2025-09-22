@@ -87,6 +87,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     volumeSlider.addEventListener("input", handleVolumeChange);
+    volumeSlider.addEventListener("change", handleVolumeChange); // For mobile
+    volumeSlider.addEventListener("touchmove", function (e) {
+        e.preventDefault(); // Prevent scrolling while adjusting volume
+        handleVolumeChange();
+    });
+    volumeSlider.addEventListener("touchend", handleVolumeChange);
 
     volumeIcon.addEventListener("click", () => {
         if (audio.muted || audio.volume === 0) {
@@ -104,19 +110,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Expanded Album Art
     albumArt.addEventListener("click", () => {
-        const overlay = document.querySelector('.overlay') || createOverlay();
+        // Find or create the shared overlay
+        let overlay = document.querySelector('.page-overlay');
+        if (!overlay) {
+            // This is a fallback in case the gallery script hasn't run, but it's good practice
+            overlay = document.createElement('div');
+            overlay.className = 'page-overlay';
+            document.body.appendChild(overlay);
+        }
+
         const isExpanded = albumArt.classList.toggle("expanded");
+
+        // Close any other expanded items first
+        if (isExpanded) {
+            const currentlyExpanded = document.querySelector('.polaroid.expanded');
+            if (currentlyExpanded) {
+                currentlyExpanded.classList.remove('expanded');
+            }
+        }
 
         overlay.classList.toggle("visible", isExpanded);
         document.body.classList.toggle('overlay-active', isExpanded);
-
-        if (!isExpanded) {
-            setTimeout(() => {
-                // Only remove the overlay if it's not visible
-                if (!overlay.classList.contains("visible")) {
-                    overlay.remove();
-                }
-            }, 300); // Match CSS transition time
-        }
     });
 });

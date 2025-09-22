@@ -5,7 +5,7 @@
     }
 
     .gallery-grid {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
     }
 
@@ -17,6 +17,28 @@
     #letter p,
     .timeline {
         max-width: 90%;
+    }
+
+    .polaroid {
+        width: clamp(40%, 70%, 80%);
+        padding: 15px 10px;
+    }
+
+    /* Styles for the polaroid when it is expanded ON A SMALL SCREEN */
+    .polaroid.expanded {
+        height: auto;
+        /* Let height be determined by content */
+        width: 90vw;
+        /* Make it 90% of the viewport width */
+        max-height: 80vh;
+        /* Ensure it doesn't get too tall */
+    }
+
+    /* Make the caption font size smaller on mobile when expanded */
+    .polaroid.expanded .caption {
+        font-size: 1rem;
+        /* Adjust as needed */
+        padding-top: 10px;
     }
 
     #audio-bar {

@@ -8,6 +8,8 @@
 /* polaroids, captions, misc. */
 @import url('./css/password.css');
 /* overlay/password box */
+@import url('./css/gallery.css');
+/* gallery specific */
 @import url('./css/audiobar.css');
 /* audio bar last major section */
 @import url('./css/responsive.css');
