@@ -13,7 +13,8 @@
 }
 
 .polaroid img {
-    width: 100%;
+    max-width: 100%;
+    height: auto;
     display: block;
     object-fit: cover;
     display: block;
@@ -59,8 +60,11 @@
 }
 
 #bipy-polaroid {
-    position: relative;
     overflow: visible;
+}
+
+#bipy-polaroid:not(.expanded) {
+    position: relative;
 }
 
 #bipy-polaroid::after {
