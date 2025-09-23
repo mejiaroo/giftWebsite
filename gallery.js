@@ -104,7 +104,7 @@ async function buildGallery() {
         "matcha1": "The first matcha you made for me",
         "matcha2": "Some commemorative photos for the matchas of course",
         "matcha3": "And an aerial view as well",
-        "firstCluckers": "LOL this is just a funny photo I took but this was you putting me onto cluckers",
+        "firstCluckers": "LOL this is just a funny photo I took but this was you putting me onto pluckers",
         "cairoBirthday1": "CAIRROOOOOOO HE IS SO CUTE omg I want to eat him",
         "cairoBirthday2": "Look at him layin down with his little COSTUME :3 he was probably relieved we took it off but idc",
         "cairoBirthday3": "And he is inspecting all of his GIFTS",
